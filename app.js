@@ -8,7 +8,7 @@ const express = require('express'),
       app = express().use(bodyParser.json());
 
 let users = {};
-const maxJokesPerDay = 3;
+const maxJokesPerDay = 10;
 
 
 app.listen(process.env.PORT || 1337, () => console.log('Listening'));
@@ -120,8 +120,8 @@ function handleJoke(senderId) {
           let tomorrow = new Date();
           tomorrow.setDate(tomorrow.getDate() + 1);
 
-          mleft = '00';
-          hLeft = '24';
+          mleft = 59;
+          hLeft = 23;
   
           users[senderId].resetTime = tomorrow;
         } else {
