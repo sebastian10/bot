@@ -75,6 +75,7 @@ function processMessage(senderId, message) {
     console.log(users);
 
     switch (formattedMsg) {
+      case 'joke':
       case 'tell me a joke':
         handleJoke(senderId);
         break;
@@ -97,7 +98,7 @@ function processMessage(senderId, message) {
         sendMessage(senderId, `I am ready to tell more jokes - Your joke count is now at ${users[senderId].jokeCount}.`)
         break;
       default:
-        sendMessage(senderId, 'Hi - I am JNbot | Created for jokes. Ask "Tell me a joke" or "help".');
+        sendMessage(senderId, 'Hi - I am JNbot | Ask "Tell me a joke" or "help".');
         break;
     }
 
@@ -112,29 +113,25 @@ function handleJoke(senderId) {
   if ( users[senderId] ) {
     if ( users[senderId].jokeCount >= maxJokesPerDay ) {
 
-      if ( users[senderId].resetTime >= today ) {
-        
-        let mLeft, hLeft;
+      if ( users[senderId].resetTime === 0 ) {
+        let tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
 
-        if ( user[senderId].resetTime === 0 ) {
-          let tomorrow = new Date();
-          tomorrow.setDate(tomorrow.getDate() + 1);
+        users[senderId].resetTime = tomorrow;
 
-          mleft = 59;
-          hLeft = 23;
-  
-          users[senderId].resetTime = tomorrow;
-        } else {
-          mLeft = (users[senderId].resetTime - today) / 1000 / 60;
-          hLeft = mLeft / 60;
-          mLeft = mLeft % 60;
-        }
+        sendMessage(senderId, `I do not have any jokes left - It takes me approximately 24h to find new ones.`);
+
+      } else if ( users[senderId].resetTime >= today ) {
+        mLeft = (users[senderId].resetTime - today) / 1000 / 60;
+        hLeft = mLeft / 60;
+        mLeft = mLeft % 60;
 
         sendMessage(senderId, `I do not have any jokes left - please wait ${hLeft}:${mLeft} for me to find more.`);
-        
       } else {
         users[senderId].jokeCount = 0;
         users[senderId].resetTime = 0;
+
+        sendMessage(senderId, `I am ready for more jokes. Ask "Tell me a joke"!`);
       }
  
     } else {
