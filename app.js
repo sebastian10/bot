@@ -123,8 +123,8 @@ function handleJoke(senderId) {
 
       } else if ( users[senderId].resetTime >= today ) {
         let mLeft = (users[senderId].resetTime - today) / 1000 / 60;
-        const hLeft = mLeft / 60;
-        mLeft = mLeft % 60;
+        const hLeft = Math.floor(mLeft / 60);
+        mLeft = Math.floor(mLeft % 60);
 
         sendMessage(senderId, `I do not have any jokes left - please wait ${hLeft}:${mLeft} for me to find more.`);
       } else {
