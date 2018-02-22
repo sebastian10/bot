@@ -122,8 +122,8 @@ function handleJoke(senderId) {
         sendMessage(senderId, `I do not have any jokes left - It takes me approximately 24h to find new ones.`);
 
       } else if ( users[senderId].resetTime >= today ) {
-        mLeft = (users[senderId].resetTime - today) / 1000 / 60;
-        hLeft = mLeft / 60;
+        let mLeft = (users[senderId].resetTime - today) / 1000 / 60;
+        const hLeft = mLeft / 60;
         mLeft = mLeft % 60;
 
         sendMessage(senderId, `I do not have any jokes left - please wait ${hLeft}:${mLeft} for me to find more.`);
