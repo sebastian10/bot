@@ -1,12 +1,12 @@
 {
-  "name": "messenger-quick-start",
+  "name": "chuck-norris-bot",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
   "scripts": {
     "start": "node app.js"
   },
-  "author": "Facebook",
+  "author": "Sebastian",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.15.0",
