@@ -85,25 +85,25 @@ function processMessage(senderId, message) {
         if ( users[senderId].jokeCount >= 1 ) {
           handleJoke(senderId);
         } else {
-          sendMessage(senderId, 'Sorry, I cannot give you more of nothing.')
+          sendMessage(senderId, 'Sorry, there are no jokes left.')
         }
 
         break;
       case 'help':
-        sendMessage(senderId, `I am here to help: "Tell me a joke" - for me to tell you a joke. You have ${maxJokesPerDay - users[senderId].jokeCount} Jokes left - Enter "To the future" - for more jokes without waiting.`);
+        sendMessage(senderId, `I am here to help: "Tell me a joke" - for me to tell you a joke. You have ${maxJokesPerDay - users[senderId].jokeCount} Jokes left - Enter "More Jokes" - for more jokes without waiting.`);
         break;
-      case 'to the future':
+      case 'more jokes':
         users[senderId].jokeCount = 0;
         users[senderId].resetTime = 0;
         sendMessage(senderId, `I am ready to tell more jokes - Your joke count is now at ${users[senderId].jokeCount}.`)
         break;
       default:
-        sendMessage(senderId, 'Hi - I am JNbot | Ask "Tell me a joke" or "help".');
+        sendMessage(senderId, 'Hi - I am JokeBot | Ask "Tell me a joke" or "help".');
         break;
     }
 
   } else if ( message.attachments ) {
-    sendMessage(senderId, 'Sorry, I cannot deal with that.')
+    sendMessage(senderId, 'Sorry, I do not know what to do with this.')
   }
 }
 
@@ -144,7 +144,7 @@ function handleJoke(senderId) {
       }, (err, res, body) => {
         if ( !err && res.statusCode == 200 ) {
           const data = JSON.parse(body);
-          sendMessage(senderId, `JOKE: "${data.value.joke}"  - Do you want "more"?`);
+          sendMessage(senderId, `"${data.value.joke}"  - Do you want "more"?`);
         }
       });
     }
